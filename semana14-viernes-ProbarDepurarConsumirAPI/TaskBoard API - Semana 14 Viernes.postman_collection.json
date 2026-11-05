@@ -1,0 +1,543 @@
+{
+  "info": {
+    "_postman_id": "631ebdd5-1a2a-4441-bb00-8d9d9aaf18b1",
+    "name": "TaskBoard API - Semana 14 Viernes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59229733",
+    "_collection_link": "https://go.postman.co/collection/59229733-631ebdd5-1a2a-4441-bb00-8d9d9aaf18b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "0. Públicas",
+      "item": [
+        {
+          "name": "Login Carlos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login Carlos responde 201\", () => pm.response.to.have.status(201));\r\npm.test(\"Devuelve un token\", () => pm.expect(pm.response.json().token).to.be.a('string'));\r\nif (pm.response.code === 201) {\r\n  pm.collectionVariables.set('token_carlos', pm.response.json().token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"carlos@taskboard.test\", \"password\": \"password123\", \"dispositivo\": \"postman-carlos\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/login",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Ana",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login Ana responde 201\", () => pm.response.to.have.status(201));\r\npm.test(\"Devuelve un token\", () => pm.expect(pm.response.json().token).to.be.a('string'));\r\nif (pm.response.code === 201) {\r\n  pm.collectionVariables.set('token_ana', pm.response.json().token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_ana}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"ana@taskboard.test\", \"password\": \"password123\", \"dispositivo\": \"postman-ana\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/login",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Clave incorrecta responde 422\", () => pm.response.to.have.status(422));\r\npm.test(\"Mensaje de credenciales\", () => {\r\n  pm.expect(pm.response.json().errors.email[0]).to.eql('Las credenciales no coinciden.');\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"ana@taskboard.test\", \"password\": \"mala\", \"dispositivo\": \"postman-ana\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/login",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Comercios sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Sin token responde 401\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/comercios",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "comercios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "1. Ana",
+      "item": [
+        {
+          "name": "yo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Ana recibe 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Es Ana López\", () => pm.expect(pm.response.json().name).to.eql('Ana López'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{host}}/yo",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "yo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "comercios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Ana recibe 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Ana solo ve sus 2 comercios\", () => {\r\n  pm.expect(pm.response.json().data.length).to.eql(2);\r\n});\r\npm.test(\"No se expone user_id\", () => {\r\n  pm.expect(pm.response.json().data[0]).to.not.have.property('user_id');\r\n});\r\npm.test(\"No aparece el comercio de Carlos\", () => {\r\n  pm.expect(pm.response.json().data.map(c => c.nombre)).to.not.include('Ferretería El Tornillo');\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/comercios",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "comercios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Comercio 2 (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Comercio ajeno responde 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/comercios/2",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "comercios",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear en comercio de Carlos (422)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"comercio_id\": 2, \"cliente_nombre\": \"Prueba\", \"monto\": 10 } ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/transacciones",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "transacciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transacciones",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Ana recibe 200\", () => pm.response.to.have.status(200));\r\nconst data = pm.response.json().data;\r\npm.test(\"Ana tiene al menos una transacción\", () => pm.expect(data.length).to.be.above(0));\r\nif (data.length > 0) {\r\n  pm.collectionVariables.set('id_tx_ana', data[0].id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/transacciones",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "transacciones"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token_ana}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "2. Carlos",
+      "item": [
+        {
+          "name": "Yo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Carlos recibe 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Es Carlos Pérez\", () => pm.expect(pm.response.json().name).to.eql('Carlos Pérez'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/yo",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "yo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Comercios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Carlos recibe 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Carlos solo ve su comercio\", () => {\r\n  pm.expect(pm.response.json().data.length).to.eql(1);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/comercios",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "comercios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transacciones",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Carlos recibe 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar transacción de Ana (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Transacción ajena responde 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/transacciones/{{id_tx_ana}}",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "transacciones",
+                "{{id_tx_ana}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token_carlos}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "3. Cierre de sesión de Ana",
+      "item": [
+        {
+          "name": "Logout Ana",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Logout responde 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/logout",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Yo Ana revocado (401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Token revocado responde 401\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/yo ",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "yo "
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token_ana}}",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "   pm.request.headers.upsert({ key: 'Accept', value: 'application/json' });"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": ""
+    },
+    {
+      "key": "token_ana",
+      "value": ""
+    },
+    {
+      "key": "token_carlos",
+      "value": ""
+    }
+  ]
+}
