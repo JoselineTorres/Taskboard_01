@@ -1,0 +1,35 @@
+meta {
+  name: CL-16 · Monto como texto (caso propio)
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "Luis Mena", "monto": "25.50" }
+}
+
+body:text {
+  { "comercio_id": 1, "cliente_nombre": "Luis Mena", "monto": "25.50" }
+}
+
+tests {
+  test("CL-16 responde 201", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

@@ -1,0 +1,31 @@
+meta {
+  name: LEEME · crea aquí tus casos
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/comercios
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+docs {
+  CASOS DESDE CERO · créalos tú en esta carpeta (clic derecho → New Request)
+  
+  CL-06 · comercio_id con texto: "abc"
+  CL-08 · cliente_nombre de exactamente 255 caracteres
+  CL-10 · cliente_nombre de 256 caracteres
+  CL-11 · cliente_nombre con solo espacios
+  CL-12 · enviar "estado": "Completada" al crear
+  CL-13 · cuerpo JSON con una coma al final
+  CL-14 · cuerpo JSON sin el encabezado Content-Type
+  CL-15 · DELETE de la misma transacción dos veces
+  
+  Para cada uno: esperado en la bitácora ANTES de enviar, petición, prueba en la pestaña Tests y fila en la bitácora.
+  Esta petición LEEME solo lista comercios: puedes usarla para comprobar la conexión.
+}
