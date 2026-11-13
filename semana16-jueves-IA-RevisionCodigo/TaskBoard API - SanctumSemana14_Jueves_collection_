@@ -1,0 +1,282 @@
+{
+  "info": {
+    "_postman_id": "26103bde-d875-452b-99e2-b9d724b74b9d",
+    "name": "TaskBoard API - Sanctum",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59229733",
+    "_collection_link": "https://go.postman.co/collection/59229733-26103bde-d875-452b-99e2-b9d724b74b9d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "yo sin token",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/yo",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "yo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "yo Ana",
+      "protocolProfileBehavior": {
+        "followRedirects": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/yo",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "yo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Comercios Ana",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/comercios",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "comercios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Comercio ajeno",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/comercios/2",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "comercios",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Comercios Carlos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_carlos}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/comercios",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "comercios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Transacciones Ana",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/transacciones",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "transacciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Transacciones Carlos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_carlos}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/transacciones",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "transacciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/logout",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_ana}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{host}}/transacciones con { \"comercio_id\": 2, \"cliente_nombre\": \"Prueba\", \"monto\": 10 }",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "transacciones con { \"comercio_id\": 2, \"cliente_nombre\": \"Prueba\", \"monto\": 10 }"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "   pm.request.headers.upsert({ key: 'Accept', value: 'application/json' });"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": ""
+    },
+    {
+      "key": "token_ana",
+      "value": ""
+    },
+    {
+      "key": "token_carlos",
+      "value": ""
+    }
+  ]
+}
