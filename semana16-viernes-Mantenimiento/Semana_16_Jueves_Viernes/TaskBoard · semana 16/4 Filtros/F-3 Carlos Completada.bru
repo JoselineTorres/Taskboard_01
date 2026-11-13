@@ -1,0 +1,37 @@
+meta {
+  name: F-3 Carlos Completada
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?estado=Completada
+  body: none
+  auth: bearer
+}
+
+params:query {
+  estado: Completada
+}
+
+auth:bearer {
+  token: {{tokenCarlos}}
+}
+
+tests {
+  test("F-3 responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("F-3 solo hay transacciones de Carlos", function () {
+    const clientes = res.getBody().data.map(t => t.cliente);
+    expect(clientes).to.include("Sofía González");
+    expect(clientes).to.not.include("Juan Pérez");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

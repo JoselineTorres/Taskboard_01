@@ -1,0 +1,34 @@
+meta {
+  name: C-4 minúsculas
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/transacciones?estado=completada
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: completada
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("C-4 minúsculas responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  test("C-4 el error está en estado", function () {
+    expect(res.getBody().errors).to.have.property("estado");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

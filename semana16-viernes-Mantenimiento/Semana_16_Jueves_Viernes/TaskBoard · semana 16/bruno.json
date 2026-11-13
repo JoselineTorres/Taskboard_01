@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "TaskBoard · semana 16",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

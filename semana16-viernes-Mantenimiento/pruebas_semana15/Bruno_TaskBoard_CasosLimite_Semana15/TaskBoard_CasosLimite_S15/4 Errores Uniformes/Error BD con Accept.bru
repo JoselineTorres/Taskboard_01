@@ -1,0 +1,21 @@
+meta {
+  name: Error BD con Accept
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/prueba-error-bd
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

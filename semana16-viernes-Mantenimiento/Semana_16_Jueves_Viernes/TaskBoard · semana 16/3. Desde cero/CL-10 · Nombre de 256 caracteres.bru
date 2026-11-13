@@ -1,0 +1,39 @@
+meta {
+  name: CL-10 · Nombre de 256 caracteres
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "{{nombreLargo}}", "monto": 25.50 }
+}
+
+script:pre-request {
+  bru.setVar("nombreLargo", "a".repeat(256));
+}
+
+tests {
+  test("CL-10 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("CL-10 el error está en cliente_nombre", function () {
+    expect(res.getBody().errors).to.have.property("cliente_nombre");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

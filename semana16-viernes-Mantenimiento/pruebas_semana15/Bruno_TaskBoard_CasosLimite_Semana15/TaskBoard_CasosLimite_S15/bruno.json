@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "TaskBoard \u00b7 Casos l\u00edmite (Semana 15)",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

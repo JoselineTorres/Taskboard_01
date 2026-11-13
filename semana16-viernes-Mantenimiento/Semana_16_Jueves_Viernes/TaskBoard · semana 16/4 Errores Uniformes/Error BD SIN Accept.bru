@@ -1,0 +1,21 @@
+meta {
+  name: Error BD SIN Accept
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/prueba-error-bd?Accept=*/*
+  body: none
+  auth: inherit
+}
+
+params:query {
+  Accept: */*
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

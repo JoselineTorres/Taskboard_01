@@ -1,0 +1,37 @@
+meta {
+  name: M-6
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?estado=Completada&monto_min=20
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: Completada
+  monto_min: 20
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("M-6 responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("M-6 solo Completadas de 20 o más", function () {
+    const lista = res.getBody().data;
+    expect(lista.every(t => t.estado === "Completada" && t.monto >= 20)).to.equal(true);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

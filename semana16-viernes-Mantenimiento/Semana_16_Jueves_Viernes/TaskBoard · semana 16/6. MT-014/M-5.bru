@@ -1,0 +1,36 @@
+meta {
+  name: M-5
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?monto_min=abc
+  body: none
+  auth: inherit
+}
+
+params:query {
+  monto_min: abc
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  // M-4 y M-5 (cambia el nombre del caso)
+  test("M-5 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("M-5 el error está en monto_min", function () {
+    expect(res.getBody().errors).to.have.property("monto_min");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

@@ -1,0 +1,35 @@
+meta {
+  name: CL-06 · comercio_id con texto
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": "abc", "cliente_nombre": "Luis Mena", "monto": 25.50 }
+}
+
+tests {
+  test("CL-06 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("CL-06 el error está en comercio_id", function () {
+    expect(res.getBody().errors).to.have.property("comercio_id");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}
