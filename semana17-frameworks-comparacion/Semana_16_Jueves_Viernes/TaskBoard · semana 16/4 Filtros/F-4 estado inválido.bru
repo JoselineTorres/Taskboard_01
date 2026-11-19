@@ -1,0 +1,27 @@
+meta {
+  name: F-4 estado inválido
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?estado=Pagada
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: Pagada
+}
+
+tests {
+  test("F-4 Estado invalido", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

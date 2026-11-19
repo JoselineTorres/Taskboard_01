@@ -1,0 +1,28 @@
+meta {
+  name: F-7 rango invertido
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?desde=2026-11-10&hasta=2026-11-01
+  body: none
+  auth: inherit
+}
+
+params:query {
+  desde: 2026-11-10
+  hasta: 2026-11-01
+}
+
+tests {
+  test("Rango Invertido", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

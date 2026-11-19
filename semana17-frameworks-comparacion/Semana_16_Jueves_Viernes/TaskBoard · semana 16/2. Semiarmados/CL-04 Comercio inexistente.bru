@@ -1,0 +1,42 @@
+meta {
+  name: CL-04 · Comercio inexistente
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  test("CL-04 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("CL-04 el error está en comercio_id", function () {
+    expect(res.getBody().errors).to.have.property("comercio_id");
+  });
+}
+
+tests {
+  // 1. Escribe tu ESPERADO en la bitácora ANTES de enviar.
+  // 2. Completa la prueba con el código que esperas:
+  
+  test("CL-04 responde ___", function () {
+    expect(res.getStatus()).to.equal(0); // cambia el 0
+  });
+}
+
+docs {
+  CASO SEMIARMADO
+  
+  Caso negativo: un id que no existe.
+  
+  Tu tarea: decide el código y el mensaje esperados, completa la prueba, ejecútala y registra el resultado en la bitácora.
+}

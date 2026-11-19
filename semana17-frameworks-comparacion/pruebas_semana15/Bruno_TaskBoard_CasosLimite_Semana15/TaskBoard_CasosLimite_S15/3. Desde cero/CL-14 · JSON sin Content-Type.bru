@@ -1,0 +1,35 @@
+meta {
+  name: CL-14 · JSON sin Content-Type
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{host}}/transacciones
+  body: text
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "Luis", "monto": 25.50, }
+}
+
+body:text {
+  { "comercio_id": 1, "cliente_nombre": "Luis", "monto": 25.50 }
+}
+
+tests {
+  test("CL-14 no responde 500", function () {
+    expect(res.getStatus()).to.not.equal(500);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

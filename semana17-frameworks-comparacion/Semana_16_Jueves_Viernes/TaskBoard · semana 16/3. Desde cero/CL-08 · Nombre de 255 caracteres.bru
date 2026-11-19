@@ -1,0 +1,35 @@
+meta {
+  name: CL-08 · Nombre de 255 caracteres
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "{{nombreLargo}}", "monto": 25.50 }
+}
+
+script:pre-request {
+  bru.setVar("nombreLargo", "a".repeat(255));
+}
+
+tests {
+  test("CL-08 responde 201", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

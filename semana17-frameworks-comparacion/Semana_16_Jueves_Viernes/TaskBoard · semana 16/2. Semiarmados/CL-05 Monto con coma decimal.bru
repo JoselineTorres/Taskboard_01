@@ -1,0 +1,42 @@
+meta {
+  name: CL-05 · Monto con coma decimal
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  test("CL-05 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("CL-05 el error está en monto", function () {
+    expect(res.getBody().errors).to.have.property("monto");
+  });
+}
+
+tests {
+  // 1. Escribe tu ESPERADO en la bitácora ANTES de enviar.
+  // 2. Completa la prueba con el código que esperas:
+  
+  test("CL-05 responde ___", function () {
+    expect(res.getStatus()).to.equal(0); // cambia el 0
+  });
+}
+
+docs {
+  CASO SEMIARMADO
+  
+  Partición de equivalencia: número escrito con coma, como en muchos países.
+  
+  Tu tarea: decide el código y el mensaje esperados, completa la prueba, ejecútala y registra el resultado en la bitácora.
+}

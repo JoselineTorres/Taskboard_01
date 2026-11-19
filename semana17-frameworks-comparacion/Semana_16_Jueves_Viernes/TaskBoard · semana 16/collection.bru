@@ -1,0 +1,23 @@
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: {{tokenAna}}
+}
+
+vars:pre-request {
+  host: http://127.0.0.1:8000/api
+}
+
+docs {
+  # TaskBoard · Casos límite (Semana 15)
+  
+  1. Levanta el proyecto (php artisan serve o php -S 127.0.0.1:8000 -t public).
+  2. Si tu API ya usa Sanctum (Semana 14), ejecuta primero "0. Preparación / Login Ana".
+     Si tu API todavía está abierta (Semana 13), puedes omitir el login.
+  3. Nivel 1: ejecuta los dos casos resueltos y observa.
+  4. Nivel 2: en cada caso semiarmado, escribe el ESPERADO en la bitácora ANTES de enviar,
+     y completa la pestaña Tests.
+  5. Nivel 3: crea tú los casos CL-06, CL-08 y CL-10 a CL-15 en la carpeta "3. Desde cero".
+}

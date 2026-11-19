@@ -1,0 +1,30 @@
+meta {
+  name: F-8 hasta hoy
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?hasta=2026-11-12
+  body: none
+  auth: inherit
+}
+
+params:query {
+  hasta: 2026-11-12
+}
+
+tests {
+  test("F-8 incluye las transacciones de hoy", function () {
+    const datos = res.getBody().data;
+    expect(datos.length).to.be.above(0);
+    const clientes = datos.map(t => t.cliente);
+    expect(clientes).to.include("Luis Mena");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}
