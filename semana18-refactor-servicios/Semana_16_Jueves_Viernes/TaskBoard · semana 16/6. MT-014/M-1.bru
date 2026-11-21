@@ -1,0 +1,37 @@
+meta {
+  name: M-1
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?monto_min=20
+  body: none
+  auth: inherit
+}
+
+params:query {
+  monto_min: 20
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("M-1 responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("M-1 todos los montos son 20 o más", function () {
+    const montos = res.getBody().data.map(t => t.monto);
+    expect(montos.length).to.be.greaterThan(0);
+    expect(montos.every(m => m >= 20)).to.equal(true);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

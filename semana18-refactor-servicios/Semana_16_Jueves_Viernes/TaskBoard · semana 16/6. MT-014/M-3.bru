@@ -1,0 +1,36 @@
+meta {
+  name: M-3
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?monto_min=50&monto_max=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  monto_min: 50
+  monto_max: 10
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("M-3 rango invertido responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("M-3 el error está en monto_max", function () {
+    expect(res.getBody().errors).to.have.property("monto_max");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

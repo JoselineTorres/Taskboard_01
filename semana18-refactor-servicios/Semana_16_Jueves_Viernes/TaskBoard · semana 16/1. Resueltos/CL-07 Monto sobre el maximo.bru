@@ -1,0 +1,43 @@
+meta {
+  name: CL-07 · Monto sobre el máximo
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "comercio_id": 1,
+    "cliente_nombre": "Luis Mena",
+    "monto": 100000000
+  }
+}
+
+tests {
+  test("CL-07 responde 422", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+  
+  test("CL-07 el error está en monto", function () {
+    expect(res.getBody().errors).to.have.property("monto");
+  });
+}
+
+docs {
+  EJEMPLO RESUELTO · hoy FALLA (es el error E-01)
+  
+  Diseño: valor límite, justo encima del máximo de decimal(10,2): 99 999 999.99.
+  Esperado: 422 con error en "monto".
+  Obtenido hoy: 201 (SQLite) o 500 (MySQL). La prueba queda en ROJO: es la evidencia.
+  Bitácora: CL-07 · esperado 422 · obtenido 201/500 · ✗ Error E-01 · Severidad Alta.
+  Mañana, al corregir la validación, esta prueba debe ponerse en VERDE.
+}

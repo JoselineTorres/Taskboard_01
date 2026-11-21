@@ -1,0 +1,29 @@
+meta {
+  name: CL-15 · DELETE repetido.
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{host}}/transacciones/21
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "Luis", "monto": 25.50, }
+}
+
+body:text {
+  { "comercio_id": 1, "cliente_nombre": "Luis Mena", "monto": "25.50" }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

@@ -1,0 +1,31 @@
+meta {
+  name: C-3 sin estado
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/transacciones
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("C-3 sin estado responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("C-3 devuelve una lista", function () {
+    expect(res.getBody().data).to.be.an("array");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

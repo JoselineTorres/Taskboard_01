@@ -1,0 +1,36 @@
+meta {
+  name: M-2
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?monto_max=100
+  body: none
+  auth: inherit
+}
+
+params:query {
+  monto_max: 100
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("M-2 responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("M-2 todos los montos son 100 o menos", function () {
+    const montos = res.getBody().data.map(t => t.monto);
+    expect(montos.every(m => m <= 100)).to.equal(true);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

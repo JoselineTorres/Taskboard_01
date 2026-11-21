@@ -1,0 +1,38 @@
+meta {
+  name: F-2 Ana Completada
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?estado= Completada
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado:  Completada
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  // F-2
+  test("F-2 responde 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("F-2 solo hay transacciones de Ana", function () {
+    const clientes = res.getBody().data.map(t => t.cliente);
+    expect(clientes).to.not.include("Pedro Ramos");
+    expect(clientes).to.include("Juan Pérez");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

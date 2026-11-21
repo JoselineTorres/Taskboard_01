@@ -1,0 +1,37 @@
+meta {
+  name: Login Ana
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/login
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "email": "ana@taskboard.test",
+    "password": "password123",
+    "dispositivo": "bruno-casos-limite"
+  }
+}
+
+script:post-response {
+  bru.setVar("tokenAna", res.getBody().token);
+}
+
+tests {
+  test("Login responde 201", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+}
+
+docs {
+  Solo si tu API usa Sanctum (Semana 14). Guarda el token en {{tokenAna}}; la colección completa lo usa como Bearer.
+}

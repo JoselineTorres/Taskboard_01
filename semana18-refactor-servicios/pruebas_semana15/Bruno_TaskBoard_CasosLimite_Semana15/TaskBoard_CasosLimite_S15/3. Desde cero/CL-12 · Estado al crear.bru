@@ -1,0 +1,31 @@
+meta {
+  name: CL-12 · Estado al crear
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{host}}/transacciones
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  { "comercio_id": 1, "cliente_nombre": "Luis Mena", "monto": 25.50, "estado": "Completada" }
+}
+
+tests {
+  test("CL-12 no responde 500", function () {
+    expect(res.getStatus()).to.not.equal(500);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

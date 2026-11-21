@@ -1,0 +1,27 @@
+meta {
+  name: F-6 fecha inválida
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{host}}/transacciones/filtrar?desde=hola
+  body: none
+  auth: inherit
+}
+
+params:query {
+  desde: hola
+}
+
+tests {
+  test("Fecha Invalida", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

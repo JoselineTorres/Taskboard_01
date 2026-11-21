@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cliente TaskBoard</title>
+</head>
+<body>
+  <h1>Tienda en línea · Mis comercios en TaskBoard</h1>
+
+  <!-- Formulario de login -->
+  <form id="login">
+    <input id="email" type="email" value="ana@taskboard.test">
+    <input id="password" type="password" value="password123">
+    <button type="submit">Entrar</button>
+  </form>
+
+  <!-- Panel: solo visible con sesión iniciada -->
+  <div id="panel" hidden>
+    <button id="salir" type="button">Salir</button>
+  </div>
+
+  <p id="estado"></p>
+  <ul id="lista"></ul>
+
+  <script>
+    const base = '/api';        // sin dominio: misma página y mismo servidor, no hay CORS
+    let token = null;           // en memoria: se pierde al recargar (más seguro que localStorage)
+
+    const $ = (id) => document.getElementById(id);
+
+    function cabeceras() {
+      return { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token };
+    }
+
+    // Vuelve a mostrar el formulario y limpia el token
+    function mostrarLogin(mensaje) {
+      token = null;
+      $('login').hidden = false;
+      $('panel').hidden = true;
+      $('lista').replaceChildren();
+      $('estado').textContent = mensaje ?? '';
+    }
+
+    function mostrarPanel() {
+      $('login').hidden = true;
+      $('panel').hidden = false;
+    }
+
+    // Login
+    $('login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const r = await fetch(base + '/login', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: $('email').value,
+          password: $('password').value,
+          dispositivo: 'cliente-web',
+        }),
+      });
+
+      if (r.status !== 201) {
+        $('estado').textContent = 'Credenciales incorrectas (' + r.status + ')';
+        return;
+      }
+
+      token = (await r.json()).token;
+      mostrarPanel();
+      cargarComercios();
+    });
+
+    // Comercios del usuario + conteo de transacciones Completadas
+    async function cargarComercios() {
+      const rc = await fetch(base + '/comercios', { headers: cabeceras() });
+      if (rc.status === 401) { mostrarLogin('Sesión vencida: vuelve a entrar.'); return; }
+      const { data: comercios } = await rc.json();
+
+      const rt = await fetch(base + '/transacciones?estado=Completada', { headers: cabeceras() });
+      if (rt.status === 401) { mostrarLogin('Sesión vencida: vuelve a entrar.'); return; }
+      const { data: transacciones } = await rt.json();
+
+      // Agrupa por comercio_id
+      const conteo = {};
+      transacciones.forEach((t) => {
+        conteo[t.comercio_id] = (conteo[t.comercio_id] ?? 0) + 1;
+      });
+
+      const lista = $('lista');
+      lista.replaceChildren();
+      comercios.forEach((c) => {
+        const li = document.createElement('li');
+        // textContent, no innerHTML: si un nombre trajera HTML, no se ejecuta
+        li.textContent = c.nombre + ' · ' + (c.rubro ?? 'Sin rubro') +
+                         ' · ' + (conteo[c.id] ?? 0) + ' completada(s)';
+        lista.appendChild(li);
+      });
+      $('estado').textContent = comercios.length + ' comercio(s)';
+    }
+
+    // Salir: revoca el token en el servidor y vuelve al formulario
+    $('salir').addEventListener('click', async () => {
+      await fetch(base + '/logout', { method: 'POST', headers: cabeceras() });
+      mostrarLogin('Sesión cerrada.');
+    });
+  </script>
+</body>
+</html>

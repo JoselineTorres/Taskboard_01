@@ -1,0 +1,25 @@
+meta {
+  name: C-1 estado inválido
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/transacciones?estado=Pagada
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: Pagada
+}
+
+headers {
+  Accept: application/json
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}
